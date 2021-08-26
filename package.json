@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-   "test": "echo \"Error: no test specified\" && exit 1",
-   "build": "webpack"
+    "dev": "webpack serve",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",

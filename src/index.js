@@ -37,9 +37,58 @@ const findCity = async (city) => {
   return data[0];
 };
 
-findCity("johannesburg")
-  .then(data =>{
-  return findWeather(data.Key)
-}).then(data => {
-  console.log(data)
-}).catch((err) => console.log(err));
+// findCity("johannesburg")
+//   .then(data =>{
+//   return findWeather(data.Key)
+// }).then(data => {
+//   console.log(data)
+// }).catch((err) => console.log(err));
+
+const addCity = async (city) => {
+  const cityKey = await findCity(city);
+  const cityWeather = await findWeather(cityKey.Key);
+
+  return {
+    cityKey: cityKey,
+    cityWeather: cityWeather
+  }
+}
+
+
+const searchForm = document.querySelector('form');
+const displayCard = document.querySelector('.display-card')
+const weatherDetails = document.querySelector('.weather-details')
+
+const display = (info)=> {
+  const cityKey = info.cityKey
+  const cityWeather = info.cityWeather
+
+  weatherDetails.innerHTML = `
+                   <h5 class="location">${cityKey.EnglishName}</h5>
+                   <div>${cityWeather.WeatherText}</div>
+                   <div>
+                        <span>${cityWeather.Temperature.Metric.Value}</span>
+                        <span>&deg;C</span>
+                        <span>${cityWeather.Temperature.Imperial.Value}</span>
+                        <span>&deg;F</span>
+                   </div>`;
+
+  if (displayCard.classList.contains('d-none')){
+    displayCard.classList.remove('d-none')
+  }
+} 
+
+searchForm.addEventListener('submit', e => {
+  e.preventDefault()
+
+  const formInput = searchForm.city.value.trim();
+  searchForm.reset()
+
+  addCity(formInput)
+   .then(data => {
+     display(data)
+   }).catch(err => {
+     console.log(err)
+   })
+})
+

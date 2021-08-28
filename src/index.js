@@ -1,48 +1,9 @@
-// import _ from 'lodash';
+import { findCity, findWeather } from "./resource";
 
-
-// function component() {
-//   const element = document.createElement("div");
-
-//   // Lodash, currently included via a script, is required for this line to work
-//   element.innerHTML = _.join(["Hello", "webpack"], " ");
-
-//   return element;
-// }
-
-// document.body.appendChild(component());
-
-const apiKey = "iiT5pz1slpmXaLAWU1cygqoLpwoAeAu3";
-
-const findWeather = async (locId) => {
-  const currentCondRes = `http://dataservice.accuweather.com/currentconditions/v1/`
-
-  const queryParam = `${locId}?apikey=${apiKey}`;
-
-  const response = await fetch(currentCondRes + queryParam)
-  const data = await response.json()
-
-  return (data[0])
-}
-
-const findCity = async (city) => {
-  const cityResource =
-    "http://dataservice.accuweather.com/locations/v1/cities/search";
-
-  const queryParam = `?apikey=${apiKey}&q=${city}`;
-
-  const response = await fetch(cityResource + queryParam);
-  const data = await response.json();
-
-  return data[0];
-};
-
-// findCity("johannesburg")
-//   .then(data =>{
-//   return findWeather(data.Key)
-// }).then(data => {
-//   console.log(data)
-// }).catch((err) => console.log(err));
+const searchForm = document.querySelector("form");
+const displayCard = document.querySelector(".display-card");
+const weatherDetails = document.querySelector(".weather-details");
+const time = document.querySelector("img.time");
 
 const addCity = async (city) => {
   const cityKey = await findCity(city);
@@ -54,10 +15,28 @@ const addCity = async (city) => {
   }
 }
 
+// const farenHeitBtn = () => {
+//   const fBtn = document.getElementById('fbtn')
+//   fBtn.addEventListener('click',(e) => {
+//     e.preventDefault()
+//     alert('btn works')
+//       // const cBtn = document.getElementById("cBtn");
+//       // cBtn.className("d-block");
+//       // const fahrenheit = document.querySelector(".fahrenheit");
+//       // fahrenheit.className("d-block");
+//   })
+//   // celciusBtn()
+// }
 
-const searchForm = document.querySelector('form');
-const displayCard = document.querySelector('.display-card')
-const weatherDetails = document.querySelector('.weather-details')
+// // const celciusBtn = () => {
+// //   const cBtn = document.getElementById('cBtn')
+// //   cBtn.addEventListener('click',() => {
+// //             cBtn.className = "d-none";
+// //             const celcius = document.querySelector(".celcius");
+// //             celcius.className = "d-block";
+
+// //   } )
+// // }
 
 const display = (info)=> {
   const cityKey = info.cityKey
@@ -67,16 +46,50 @@ const display = (info)=> {
                    <h5 class="location">${cityKey.EnglishName}</h5>
                    <div>${cityWeather.WeatherText}</div>
                    <div>
-                        <span>${cityWeather.Temperature.Metric.Value}</span>
-                        <span>&deg;C</span>
-                        <span>${cityWeather.Temperature.Imperial.Value}</span>
-                        <span>&deg;F</span>
+                        <span class="celcius">${cityWeather.Temperature.Metric.Value} &deg;C</span>
+                        <button id="cBtn" class="d-none"> Celcius</button>
+                        <span class="d-none fahrenheit">${cityWeather.Temperature.Imperial.Value} &deg;F</span>
+                        <button id="fBtn"> Farenheit</button>
                    </div>`;
+  
 
+   let imgSrc = cityWeather.IsDayTime ? "./asset/day.svg" :  "./asset/night.svg";
+
+   time.setAttribute("src", imgSrc);  
+    
+    
   if (displayCard.classList.contains('d-none')){
     displayCard.classList.remove('d-none')
   }
+  farenHeitBtn()
 } 
+
+const farenHeitBtn = () => {
+  const fBtn = document.getElementById('fBtn')
+  fBtn.addEventListener('click',(e) => {
+    e.preventDefault();
+    fBtn.className = "d-none";
+    const fahrenheit = document.querySelector(".fahrenheit");
+    fahrenheit.className = "d-block";
+    const cBtn = document.getElementById("cBtn");
+    cBtn.className = "d-block";
+    const celcius = document.querySelector('.celcius')
+    celcius.className = 'd-none'
+  })
+  celciusBtn()
+}
+
+const celciusBtn = () => {
+  const cBtn = document.getElementById("cBtn");
+  cBtn.addEventListener("click", () => {
+    // cBtn.className = "d-none";
+    const cBtn = document.querySelector(".cBtn");
+    cBtn.className = "d-block";
+    const fBtn = document.getElementById(".fBtn");
+    fBtn.className = "d-block";
+  });
+};
+
 
 searchForm.addEventListener('submit', e => {
   e.preventDefault()

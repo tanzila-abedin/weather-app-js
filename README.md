@@ -1,6 +1,6 @@
 # Weather App
 
-[Click here to view live demo](https://tanzila-abedin.github.io/weather-app-js/)
+[Click here to view live demo](http://tanzila-abedin.github.io/weather-app-js/)
 
 ### This web app was built using JavaScript and allow users to get weather information.
 

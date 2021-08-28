@@ -1,23 +1,23 @@
-import { findCity, findWeather } from "./resource";
+import { findCity, findWeather } from './resource';
 
-const searchForm = document.querySelector("form");
-const displayCard = document.querySelector(".display-card");
-const weatherDetails = document.querySelector(".weather-details");
-const time = document.querySelector("img.time");
+const searchForm = document.querySelector('form');
+const displayCard = document.querySelector('.display-card');
+const weatherDetails = document.querySelector('.weather-details');
+const time = document.querySelector('img.time');
 
 const addCity = async (city) => {
   const cityKey = await findCity(city);
   const cityWeather = await findWeather(cityKey.Key);
 
   return {
-    cityKey: cityKey,
-    cityWeather: cityWeather
-  }
-}
+    cityKey,
+    cityWeather,
+  };
+};
 
-const display = (info)=> {
-  const cityKey = info.cityKey
-  const cityWeather = info.cityWeather
+const display = (info) => {
+  const { cityKey } = info;
+  const { cityWeather } = info;
 
   weatherDetails.innerHTML = `
                    <h5 class="location">${cityKey.EnglishName}</h5>
@@ -26,32 +26,26 @@ const display = (info)=> {
                         <span class="celcius">${cityWeather.Temperature.Metric.Value} &deg;C</span></br>
                         <span id="fahrenheit">${cityWeather.Temperature.Imperial.Value} &deg;F</span>
                    </div>`;
-  
 
-   let imgSrc = cityWeather.IsDayTime ? "./asset/day.svg" :  "./asset/night.svg";
+  const imgSrc = cityWeather.IsDayTime ? './asset/day.svg' : './asset/night.svg';
 
-   time.setAttribute("src", imgSrc);  
-    
-    
-  if (displayCard.classList.contains('d-none')){
-    displayCard.classList.remove('d-none')
+  time.setAttribute('src', imgSrc);
+
+  if (displayCard.classList.contains('d-none')) {
+    displayCard.classList.remove('d-none');
   }
+};
 
-} 
-
-
-
-searchForm.addEventListener('submit', e => {
-  e.preventDefault()
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
   const formInput = searchForm.city.value.trim();
-  searchForm.reset()
+  searchForm.reset();
 
   addCity(formInput)
-   .then(data => {
-     display(data)
-   }).catch(err => {
-      display(err)
-   })
-})
-
+    .then((data) => {
+      display(data);
+    }).catch((err) => {
+      display(err);
+    });
+});

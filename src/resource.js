@@ -1,7 +1,7 @@
 const apiKey = 'iiT5pz1slpmXaLAWU1cygqoLpwoAeAu3';
 
 export const findWeather = async (locId) => {
-  const currentCondRes = 'http://dataservice.accuweather.com/currentconditions/v1/';
+  const currentCondRes = 'https://dataservice.accuweather.com/currentconditions/v1/';
 
   const queryParam = `${locId}?apikey=${apiKey}`;
 
@@ -12,7 +12,7 @@ export const findWeather = async (locId) => {
 };
 
 export const findCity = async (city) => {
-  const cityResource = 'http://dataservice.accuweather.com/locations/v1/cities/search';
+  const cityResource = 'https://dataservice.accuweather.com/locations/v1/cities/search';
 
   const queryParam = `?apikey=${apiKey}&q=${city}`;
 

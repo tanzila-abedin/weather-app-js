@@ -4,6 +4,7 @@ const searchForm = document.querySelector('form');
 const displayCard = document.querySelector('.display-card');
 const weatherDetails = document.querySelector('.weather-details');
 const time = document.querySelector('img.time');
+const iconImg = document.querySelector('.icon img')
 
 const addCity = async (city) => {
   const cityKey = await findCity(city);
@@ -18,23 +19,51 @@ const addCity = async (city) => {
 const display = (info) => {
   const { cityKey } = info;
   const { cityWeather } = info;
-
+  
   weatherDetails.innerHTML = `
                    <h5 class="location">${cityKey.EnglishName}</h5>
                    <div>${cityWeather.WeatherText}</div>
-                   <div>
+                   <div id="cel-container" class=" my-4">
                         <span class="celcius">${cityWeather.Temperature.Metric.Value} &deg;C</span></br>
-                        <span id="fahrenheit">${cityWeather.Temperature.Imperial.Value} &deg;F</span>
+                        <button class="farenheitBtn">Farenheit</button>
+  
+                        <div class="farenheit">${cityWeather.Temperature.Imperial.Value} &deg;F</div>
                    </div>`;
+  
+  const iconSrc = `./asset/icons/${cityWeather.WeatherIcon}.svg`
+
+  iconImg.setAttribute('src', iconSrc)
 
   const imgSrc = cityWeather.IsDayTime ? './asset/day.svg' : './asset/night.svg';
-
+  
   time.setAttribute('src', imgSrc);
 
   if (displayCard.classList.contains('d-none')) {
     displayCard.classList.remove('d-none');
   }
+  celciusToFarenheitEvent()
 };
+
+
+const celciusToFarenheitEvent = () => {
+  // const { cityWeather } = info;
+  const farenheitBtn = document.querySelector(".farenheitBtn");
+  const farenheit = document.querySelector(".farenheit");
+  farenheitBtn.onclick = () =>{
+    if (farenheit.style.display === "none") {
+      farenheit.style.display = 'block';
+    } else {
+      farenheit.style.display = "none";
+    }
+  }
+}
+
+  // var x = document.getElementById("myDIV");
+  // if (x.style.display === "none") {
+  //   x.style.display = "block";
+  // } else {
+  //   x.style.display = "none";
+  // }
 
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();

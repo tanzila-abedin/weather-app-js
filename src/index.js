@@ -46,7 +46,6 @@ const display = (info) => {
 
 
 const celciusToFarenheitEvent = () => {
-  // const { cityWeather } = info;
   const farenheitBtn = document.querySelector(".farenheitBtn");
   const farenheit = document.querySelector(".farenheit");
   farenheitBtn.onclick = () =>{
@@ -57,13 +56,6 @@ const celciusToFarenheitEvent = () => {
     }
   }
 }
-
-  // var x = document.getElementById("myDIV");
-  // if (x.style.display === "none") {
-  //   x.style.display = "block";
-  // } else {
-  //   x.style.display = "none";
-  // }
 
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();

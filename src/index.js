@@ -4,7 +4,7 @@ const searchForm = document.querySelector('form');
 const displayCard = document.querySelector('.display-card');
 const weatherDetails = document.querySelector('.weather-details');
 const time = document.querySelector('img.time');
-const iconImg = document.querySelector('.icon img')
+const iconImg = document.querySelector('.icon img');
 
 const addCity = async (city) => {
   const cityKey = await findCity(city);
@@ -16,10 +16,22 @@ const addCity = async (city) => {
   };
 };
 
+const celciusToFarenheitEvent = () => {
+  const farenheitBtn = document.querySelector('.farenheitBtn');
+  const farenheit = document.querySelector('.farenheit');
+  farenheitBtn.onclick = () => {
+    if (farenheit.style.display === 'none') {
+      farenheit.style.display = 'block';
+    } else {
+      farenheit.style.display = 'none';
+    }
+  };
+};
+
 const display = (info) => {
   const { cityKey } = info;
   const { cityWeather } = info;
-  
+
   weatherDetails.innerHTML = `
                    <h5 class="location">${cityKey.EnglishName}</h5>
                    <div>${cityWeather.WeatherText}</div>
@@ -29,33 +41,20 @@ const display = (info) => {
   
                         <div class="farenheit">${cityWeather.Temperature.Imperial.Value} &deg;F</div>
                    </div>`;
-  
-  const iconSrc = `./asset/icons/${cityWeather.WeatherIcon}.svg`
 
-  iconImg.setAttribute('src', iconSrc)
+  const iconSrc = `./asset/icons/${cityWeather.WeatherIcon}.svg`;
+
+  iconImg.setAttribute('src', iconSrc);
 
   const imgSrc = cityWeather.IsDayTime ? './asset/day.svg' : './asset/night.svg';
-  
+
   time.setAttribute('src', imgSrc);
 
   if (displayCard.classList.contains('d-none')) {
     displayCard.classList.remove('d-none');
   }
-  celciusToFarenheitEvent()
+  celciusToFarenheitEvent();
 };
-
-
-const celciusToFarenheitEvent = () => {
-  const farenheitBtn = document.querySelector(".farenheitBtn");
-  const farenheit = document.querySelector(".farenheit");
-  farenheitBtn.onclick = () =>{
-    if (farenheit.style.display === "none") {
-      farenheit.style.display = 'block';
-    } else {
-      farenheit.style.display = "none";
-    }
-  }
-}
 
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();

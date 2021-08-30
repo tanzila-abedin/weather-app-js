@@ -1,3 +1,20 @@
+body {
+     background-image: url(./asset/photo-1563974318767-a4de855d7b43.jpeg);
+     background-repeat: no-repeat;
+     background-size: 100%;
+}
+
 .main {
-     width: 580px;
+     width: 400px;
+}
+
+.cel-value :hover{
+  cursor: pointer;
+  color: #FB743F;
+}
+
+.icon {
+     position: relative;
+     top: -50px;
+     margin-bottom: -50px;
 }

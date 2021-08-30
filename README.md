@@ -12,8 +12,13 @@
 ## Getting Started
 
 - Download or clone this repo by using `git clone https://github.com/tanzila-abedin/weather-app-js.git`
+- `cd weather-app-js`
 - Run `npm install`
-- Enter the project folder and run locally by using `npx webpack --watch`
+- Run `npx webpack` to bundle the files in the src folder & product ouput in dist folder
+
+  or
+
+- Go to the dist folder and open index.html
 ## Author
 
 👤 **Tanzila**

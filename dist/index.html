@@ -14,20 +14,19 @@
          <h1 class="text-center">Weather App</h1>
          <form class="search-location mb-4">
               <label for="city">Enter a city name</label>
-               <input type="text" name="city" class="form-control">
+              <input type="text" name="city" class="form-control">
          </form>
 
-         <div class="shadow-lg">
-              <img src="https://via.placeholder.com/400x300" class="card-img-top">
-              <div class="icon">
-                   <!-- icon -->
+         <div class="display-card shadow-lg d-none text-center">
+              <img src="https://via.placeholder.com/400x300" class="time card-img-top">
+              <div class="icon bg-light">
+                   <img src="" alt="">
               </div>
-              <div class="weather-details bg-light mb-5">
-                   <h5 class="location">location</h5>
-                   <div>weather condition</div>
-                   <div>
-                        <span>temp</span>
-                        <span>&deg;C</span>
+              <div class="weather-details text-uppercase bg-light">
+                   <h5 class="location"></h5>
+                   <div class="weather-text"></div>
+                   <div id="cel-container" class=" my-4">
+                        <span class="cel-value display-6 "></span>
                    </div>
               </div>
          </div>

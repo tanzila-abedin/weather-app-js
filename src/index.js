@@ -2,9 +2,11 @@ import { findCity, findWeather } from './resource';
 
 const searchForm = document.querySelector('form');
 const displayCard = document.querySelector('.display-card');
-const weatherDetails = document.querySelector('.weather-details');
 const time = document.querySelector('img.time');
 const iconImg = document.querySelector('.icon img');
+const location = document.querySelector(".location");
+const weatherText = document.querySelector(".weather-text");
+const celciusValue = document.querySelector(".cel-value");
 
 const addCity = async (city) => {
   const cityKey = await findCity(city);
@@ -16,31 +18,16 @@ const addCity = async (city) => {
   };
 };
 
-const celciusToFarenheitEvent = () => {
-  const farenheitBtn = document.querySelector('.farenheitBtn');
-  const farenheit = document.querySelector('.farenheit');
-  farenheitBtn.onclick = () => {
-    if (farenheit.style.display === 'none') {
-      farenheit.style.display = 'block';
-    } else {
-      farenheit.style.display = 'none';
-    }
-  };
-};
 
 const display = (info) => {
   const { cityKey } = info;
   const { cityWeather } = info;
 
-  weatherDetails.innerHTML = `
-                   <h5 class="location">${cityKey.EnglishName}</h5>
-                   <div>${cityWeather.WeatherText}</div>
-                   <div id="cel-container" class=" my-4">
-                        <span class="celcius">${cityWeather.Temperature.Metric.Value} &deg;C</span></br>
-                        <button class="farenheitBtn">Farenheit</button>
-  
-                        <div class="farenheit">${cityWeather.Temperature.Imperial.Value} &deg;F</div>
-                   </div>`;
+
+  location.innerHTML = `<h5>${cityKey.EnglishName}</h5>`;
+  weatherText.innerHTML = `${cityWeather.WeatherText}`;
+  celciusValue.innerHTML = `<p>${cityWeather.Temperature.Metric.Value}&deg;C</p>`;
+
 
   const iconSrc = `./asset/icons/${cityWeather.WeatherIcon}.svg`;
 
@@ -53,8 +40,27 @@ const display = (info) => {
   if (displayCard.classList.contains('d-none')) {
     displayCard.classList.remove('d-none');
   }
-  celciusToFarenheitEvent();
+
+  celciusValue.addEventListener("click",(e) => {
+   e.preventDefault()
+    if(cityWeather.Temperature.Unit == 'C'){
+      let fahrenheit = convertToFahrenheit(cityWeather.Temperature.Metric.Value);
+      fahrenheit = Math.floor(fahrenheit) 
+
+      celciusValue.innerHTML = `<p>${fahrenheit}&deg;F</p>`;
+      cityWeather.Temperature.Unit = 'F'
+    }else{
+      celciusValue.innerHTML = `<p>${cityWeather.Temperature.Metric.Value}&deg;C</p>`;
+      cityWeather.Temperature.Unit = "C";
+    }
+})
+
 };
+
+const convertToFahrenheit = (temp) => {
+  return(temp * 9/5) + 32
+}
+
 
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();

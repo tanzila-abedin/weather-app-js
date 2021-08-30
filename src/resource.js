@@ -1,4 +1,4 @@
-const apiKey = 'W6hGiPn2Q60caNwWFdAG51vylAE838Av';
+const apiKey = "OJS1vTFOrcPksu5SgNhGEprWKE0v5mAG";
 
 export const findWeather = async (locId) => {
   const currentCondRes = 'https://dataservice.accuweather.com/currentconditions/v1/';
